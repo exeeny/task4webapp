@@ -1,0 +1,67 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Home{% endblock %}
+
+{% block body %}
+<div class="max-w-7xl mx-auto p-4">
+<h1 class="text-3xl font-bold mb-6">Home</h1>
+
+<form method="POST" action="{{ path('handle_users') }}">
+    <div class="flex gap-3 mb-3">
+        <button class="bg-white dark:bg-gray-600 border border-indigo-500 font-medium py-2 px-3 rounded cursor-pointer" type="submit" name="action" value="block">Block</button>
+        <button class="bg-white dark:bg-gray-600 border border-indigo-500 font-medium py-2 px-3 rounded cursor-pointer" type="submit" name="action" value="unblock"><i class="fa-solid fa-unlock fa-lg"></i></button>
+        <button class="bg-white dark:bg-gray-600 border border-indigo-500 font-medium py-2 px-3 rounded cursor-pointer" type="submit" name="action" value="delete"><i class="fa-solid fa-trash fa-lg"></i></button>
+    </div>
+
+<div class="relative overflow-x-auto m-2">
+    <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <tr>
+                <th scope="col" class="p-3"><input type="checkbox" id="select-all"></th>
+                <th scope="col" class="px-6 py-3">
+                    name
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    email
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    status
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    last login
+                </th>
+                
+            </tr>
+        </thead>
+        <tbody>{% for user in users %}
+            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200">
+                
+                <td scope="row" class="p-3"><input type="checkbox" name="userIds[]" value="{{ user.id }}"></td>
+                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                    {{ user.name }}
+                </th>
+                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                    {{ user.email }}
+                </th>
+                <td class="px-6 py-4">
+                    {{ user.isBlocked ? 'Blocked' : 'Active' }}
+                </td>
+                <td class="px-6 py-4">
+                    {{ user.lastLoginAt is empty ? "never" :  user.lastLoginAt|date('Y-m-d H:i:s')}} 
+                </td>
+               
+            </tr>
+             {% endfor %}
+        </tbody>
+    </table>
+</div>
+</form>
+</div>
+
+<script>
+document.getElementById('select-all').addEventListener('change', function() {
+    const checkboxes = document.querySelectorAll('input[name="userIds[]"]');
+    checkboxes.forEach(cb => cb.checked = this.checked);
+});
+</script>
+{% endblock %}
