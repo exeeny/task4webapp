@@ -27,6 +27,12 @@ final class HomeController extends AbstractController
      #[Route('/handle-users', name: 'handle_users', methods: ['POST'])]
 public function handleUsers(TokenStorageInterface $tokenStorage, Request $request, EntityManagerInterface $em, UserRepository $repository, SessionInterface $session): Response
 {
+    if ($this->getUser()->isBlocked()) {
+        $tokenStorage->setToken(null);
+        $session->invalidate();
+        $this->addFlash('notice', 'User is blocked. Access denied.');
+        return $this->redirectToRoute('app_login');
+        }
     
     $userIds = $request->request->all('userIds');
     $action = $request->request->get('action');
@@ -60,15 +66,16 @@ public function handleUsers(TokenStorageInterface $tokenStorage, Request $reques
         $tokenStorage->setToken(null);
         $session->invalidate();
         $em->flush();
-        return $this->redirectToRoute('app_logout');
+        $this->addFlash('notice', 'User was deleted.');
+        return $this->redirectToRoute('app_register');
     }
 
     $em->flush();
     $this->addFlash('notice', ucfirst($action) . ' completed.');
 
-     if ($iscurrent && $action == 'block') {
-        return $this->redirectToRoute('app_logout');
-    }
+    //  if ($iscurrent && $action == 'block') {
+    //     return $this->redirectToRoute('app_logout');
+    // }
 
     return $this->redirectToRoute('app_home');
 }

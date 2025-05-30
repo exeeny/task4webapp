@@ -1,6 +1,8 @@
 # see https://symfony.com/doc/current/reference/configuration/framework.html
 framework:
     secret: '%env(APP_SECRET)%'
+    router:
+        default_uri: 'http://127.0.0.1:8000/'
 
     # Note that the session will be started ONLY if you read or write from it.
     session: true
