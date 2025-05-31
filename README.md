@@ -1,6 +1,7 @@
 ## Simple user management application
 
 This project is user management tool that provides administrators with control over user accounts.
+Website was developed using the Symfony PHP framework, deployed using Platform.sh
 
 
 https://github.com/user-attachments/assets/cf469e6a-7edf-49a7-ac3d-4360a418c75c
@@ -20,3 +21,4 @@ https://github.com/user-attachments/assets/cf469e6a-7edf-49a7-ac3d-4360a418c75c
 - Error + success messages.
 
 ---
+
