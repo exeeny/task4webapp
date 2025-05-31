@@ -2,7 +2,7 @@
 framework:
     secret: '%env(APP_SECRET)%'
     router:
-        default_uri: 'http://127.0.0.1:8000/'
+        default_uri: '%env(APP_URL)%'
 
     # Note that the session will be started ONLY if you read or write from it.
     session: true
