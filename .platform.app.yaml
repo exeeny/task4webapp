@@ -19,7 +19,7 @@ runtime:
 
 variables:
     env:
-        APP_URL: "http://127.0.0.1:8000/" 
+        APP_URL: "https://main-bvxea6i-bjnzeujnoeh2y.ch-1.platformsh.site/" 
 
     php:
         opcache.preload: config/preload.php
